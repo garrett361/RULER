@@ -35,6 +35,7 @@ MODEL_SELECT() {
             MODEL_TEMPLATE_TYPE="base"
             MODEL_FRAMEWORK="vllm"
             TOKENIZER_PATH=${TOKENIZER_PATH}
+            TOKENIZER_TYPE="hf"
             ;;
         llama2-7b-chat)
             MODEL_PATH="${MODEL_DIR}/llama2-7b-chat-hf"
