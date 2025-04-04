@@ -238,7 +238,7 @@ def main():
         wandb.init(project=args.wandb_project, id=args.wandb_id)
         wandb.config = vars(args)
         wandb_results = {
-            task: results["score"] for task, results in eval_results.items()
+            task + "_ruler": results["score"] for task, results in eval_results.items()
         }
         wandb.log(wandb_results, step=0)
 
