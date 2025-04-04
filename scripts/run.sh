@@ -62,6 +62,7 @@ fi
 if [ "$MODEL_FRAMEWORK" == "vllm" ]; then
     python pred/serve_vllm.py \
         --model=${MODEL_PATH} \
+        --tokenizer=${TOKENIZER_PATH} \
         --tensor-parallel-size=${GPUS} \
         --dtype bfloat16 \
         --disable-custom-all-reduce \
