@@ -28,8 +28,14 @@ MODEL_SELECT() {
     MODEL_NAME=$1
     MODEL_DIR=$2
     ENGINE_DIR=$3
-    
+
     case $MODEL_NAME in
+        mamba)
+            MODEL_PATH=${MODEL_DIR}
+            MODEL_TEMPLATE_TYPE="base"
+            MODEL_FRAMEWORK="vllm"
+            TOKENIZER_PATH=${TOKENIZER_PATH}
+            ;;
         llama2-7b-chat)
             MODEL_PATH="${MODEL_DIR}/llama2-7b-chat-hf"
             MODEL_TEMPLATE_TYPE="meta-chat"
