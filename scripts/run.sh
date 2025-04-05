@@ -24,7 +24,7 @@ fi
 
 # Root Directories
 GPUS="8" # GPU size for tensor_parallel.
-ROOT_DIR=${ROOT_DIR:-"benchmark_root"} # the path that stores generated task samples and model predictions.
+ROOT_DIR="benchmark_root" # the path that stores generated task samples and model predictions.
 MODEL_DIR=${MODEL_DIR} # the path that contains individual model folders from HUggingface.
 ENGINE_DIR="." # the path that contains individual engine folders from TensorRT-LLM.
 BATCH_SIZE=1  # increase to improve GPU utilization
@@ -87,11 +87,15 @@ fi
 
 # Start client (prepare data / call model API / obtain final metrics)
 total_time=0
+
+# Possible overrides for data and pred dirs:
+ROOT_DATA_DIR=${ROOT_DATA_DIR:-${ROOT_DIR}}
+ROOT_PRED_DIR=${ROOT_PRED_DIR:-${ROOT_DIR}}
+
 for MAX_SEQ_LENGTH in "${SEQ_LENGTHS[@]}"; do
 
-    RESULTS_DIR="${ROOT_DIR}/${MODEL_NAME}/${BENCHMARK}/${MAX_SEQ_LENGTH}"
-    DATA_DIR="${RESULTS_DIR}/data"
-    PRED_DIR="${RESULTS_DIR}/pred"
+    DATA_DIR="${ROOT_DATA_DIR}/${MODEL_NAME}/${BENCHMARK}/${MAX_SEQ_LENGTH}/data"
+    PRED_DIR="${ROOT_PRED_DIR}/${MODEL_NAME}/${BENCHMARK}/${MAX_SEQ_LENGTH}/pred"
     mkdir -p ${DATA_DIR}
     mkdir -p ${PRED_DIR}
 
