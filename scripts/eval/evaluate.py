@@ -231,11 +231,14 @@ def main():
             "predicts": predicts,
             "indices": indices,
         }
-    if args.wandb:
+
+    if wandb_project := os.getenv("WANDB_PROJECT"):
+        wandb_id = os.getenv("WANDB_RUN_ID")
+        assert wandb_id
         import wandb  # type: ignore
 
         print("--> wandb is enabled!")
-        wandb.init(project=args.wandb_project, id=args.wandb_id)
+        wandb.init(project=wandb_project, id=wandb_id)
         wandb.config = vars(args)
         wandb_results = {
             task + "_ruler": results["score"] for task, results in eval_results.items()
