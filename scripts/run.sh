@@ -126,6 +126,7 @@ for MAX_SEQ_LENGTH in "${SEQ_LENGTHS[@]}"; do
     done
 
     python eval/evaluate.py \
+        --max_seq_length ${MAX_SEQ_LENGTH} \
         --data_dir ${PRED_DIR} \
         --benchmark ${BENCHMARK}
 done

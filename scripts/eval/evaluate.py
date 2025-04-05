@@ -56,9 +56,7 @@ parser.add_argument(
 parser.add_argument(
     "--verbose", type=int, default=0, help="how many lines you want to display."
 )
-parser.add_argument("--wandb", action="store_true")
-parser.add_argument("--wandb_project", type=str, default=None)
-parser.add_argument("--wandb_id", type=str, default=None)
+parser.add_argument("--max_seq_length", type=int)
 args = parser.parse_args()
 
 
@@ -243,7 +241,8 @@ def main():
         wandb_results = {
             task + "_ruler": results["score"] for task, results in eval_results.items()
         }
-        wandb.log(wandb_results, step=0)
+        wandb_results["max_seq_length"] = args.max_seq_length
+        wandb.log(wandb_results, step=args.max_seq_length)
 
     # Write to csv
     write_evaluation(eval_results)
@@ -252,4 +251,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
