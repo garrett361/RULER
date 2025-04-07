@@ -92,6 +92,8 @@ total_time=0
 ROOT_DATA_DIR=${ROOT_DATA_DIR:-${ROOT_DIR}}
 ROOT_PRED_DIR=${ROOT_PRED_DIR:-${ROOT_DIR}}
 
+# Iterate over user provided lens, or default
+SEQ_LENGTHS=${SEQ_LENGTHS:-"4096"}
 for MAX_SEQ_LENGTH in "${SEQ_LENGTHS[@]}"; do
 
     DATA_DIR="${ROOT_DATA_DIR}/${MODEL_NAME}/${BENCHMARK}/${MAX_SEQ_LENGTH}/data"
