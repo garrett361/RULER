@@ -29,6 +29,11 @@ MODEL_SELECT() {
             TOKENIZER_PATH=${TOKENIZER_PATH}
             TOKENIZER_TYPE="hf"
             ;;
+        mamba-public)
+            MODEL_PATH="${MODEL_DIR}/Bamba-9B"
+            MODEL_TEMPLATE_TYPE="base"
+            MODEL_FRAMEWORK="vllm"
+            ;;
         llama2-7b-chat)
             MODEL_PATH="${MODEL_DIR}/llama2-7b-chat-hf"
             MODEL_TEMPLATE_TYPE="meta-chat"
