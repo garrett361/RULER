@@ -23,22 +23,32 @@ fi
 
 
 # Root Directories
-GPUS="1" # GPU size for tensor_parallel.
+GPUS=$(nvidia-smi --list-gpus | wc -l) # Use all available GPUs
 ROOT_DIR="benchmark_root" # the path that stores generated task samples and model predictions.
-MODEL_DIR="../.." # the path that contains individual model folders from HUggingface.
 ENGINE_DIR="." # the path that contains individual engine folders from TensorRT-LLM.
-BATCH_SIZE=1  # increase to improve GPU utilization
+BATCH_SIZE=${BATCH_SIZE:-8}  # increase to improve GPU utilization
+
+# NOTE: @goon - bypass the config_models.sh logic and assume the user has specified the following
+# directly
+# - MODEL_PATH
+# - MODEL_TEMPLATE_TYPE
+# - MODEL_FRAMEWORK
+# - TOKENIZER_PATH
+# - TOKENIZER_TYPE
+#
+# MODEL_NAME is only used to determine where the outputs go
 
 
-# Model and Tokenizer
-source config_models.sh
 MODEL_NAME=${1}
-MODEL_CONFIG=$(MODEL_SELECT ${MODEL_NAME} ${MODEL_DIR} ${ENGINE_DIR})
-IFS=":" read MODEL_PATH MODEL_TEMPLATE_TYPE MODEL_FRAMEWORK TOKENIZER_PATH TOKENIZER_TYPE OPENAI_API_KEY GEMINI_API_KEY AZURE_ID AZURE_SECRET AZURE_ENDPOINT <<< "$MODEL_CONFIG"
-if [ -z "${MODEL_PATH}" ]; then
-    echo "Model: ${MODEL_NAME} is not supported"
-    exit 1
-fi
+
+# # Model and Tokenizer
+# source config_models.sh
+# MODEL_CONFIG=$(MODEL_SELECT ${MODEL_NAME} ${MODEL_DIR} ${ENGINE_DIR})
+# IFS=":" read MODEL_PATH MODEL_TEMPLATE_TYPE MODEL_FRAMEWORK TOKENIZER_PATH TOKENIZER_TYPE OPENAI_API_KEY GEMINI_API_KEY AZURE_ID AZURE_SECRET AZURE_ENDPOINT <<< "$MODEL_CONFIG"
+# if [ -z "${MODEL_PATH}" ]; then
+#     echo "Model: ${MODEL_NAME} is not supported"
+#     exit 1
+# fi
 
 
 export OPENAI_API_KEY=${OPENAI_API_KEY}
@@ -65,6 +75,7 @@ if [ "$MODEL_FRAMEWORK" == "vllm" ]; then
         --tensor-parallel-size=${GPUS} \
         --dtype bfloat16 \
         --disable-custom-all-reduce \
+        --trust-remote-code \
         &
 
 elif [ "$MODEL_FRAMEWORK" == "trtllm" ]; then
@@ -87,13 +98,13 @@ fi
 # Start client (prepare data / call model API / obtain final metrics)
 total_time=0
 for MAX_SEQ_LENGTH in "${SEQ_LENGTHS[@]}"; do
-    
+
     RESULTS_DIR="${ROOT_DIR}/${MODEL_NAME}/${BENCHMARK}/${MAX_SEQ_LENGTH}"
     DATA_DIR="${RESULTS_DIR}/data"
     PRED_DIR="${RESULTS_DIR}/pred"
     mkdir -p ${DATA_DIR}
     mkdir -p ${PRED_DIR}
-    
+
     for TASK in "${TASKS[@]}"; do
         python data/prepare.py \
             --save_dir ${DATA_DIR} \
@@ -105,7 +116,7 @@ for MAX_SEQ_LENGTH in "${SEQ_LENGTHS[@]}"; do
             --model_template_type ${MODEL_TEMPLATE_TYPE} \
             --num_samples ${NUM_SAMPLES} \
             ${REMOVE_NEWLINE_TAB}
-        
+
         start_time=$(date +%s)
         python pred/call_api.py \
             --data_dir ${DATA_DIR} \
@@ -123,7 +134,7 @@ for MAX_SEQ_LENGTH in "${SEQ_LENGTHS[@]}"; do
         time_diff=$((end_time - start_time))
         total_time=$((total_time + time_diff))
     done
-    
+
     python eval/evaluate.py \
         --data_dir ${PRED_DIR} \
         --benchmark ${BENCHMARK}
