@@ -39,9 +39,18 @@ BATCH_SIZE=${BATCH_SIZE:-8}  # increase to improve GPU utilization
 # MODEL_NAME is only used to determine where the outputs go
 
 
+# NOTE: @goon - move the non-MODEL_SELECT code from config_models.sh here
 MODEL_NAME=${1}
+TEMPERATURE="0.0" # greedy
+TOP_P="1.0"
+TOP_K="32"
+
+# Turn a comma-separated SEQ_LENGTHS list into a bash array
+SEQ_LENGTHS=${SEQ_LENGTHS:-4096,8192,16384,32768}
+IFS=',' read -ra SEQ_LENGTHS <<< "$SEQ_LENGTHS"
 
 # # Model and Tokenizer
+# NOTE: @goon - still sourcing config_models.sh because it's where we also
 # source config_models.sh
 # MODEL_CONFIG=$(MODEL_SELECT ${MODEL_NAME} ${MODEL_DIR} ${ENGINE_DIR})
 # IFS=":" read MODEL_PATH MODEL_TEMPLATE_TYPE MODEL_FRAMEWORK TOKENIZER_PATH TOKENIZER_TYPE OPENAI_API_KEY GEMINI_API_KEY AZURE_ID AZURE_SECRET AZURE_ENDPOINT <<< "$MODEL_CONFIG"
@@ -61,6 +70,10 @@ echo "MODEL_TEMPLATE_TYPE=$MODEL_TEMPLATE_TYPE"
 echo "MODEL_FRAMEWORK=$MODEL_FRAMEWORK"
 echo "TOKENIZER_PATH=$TOKENIZER_PATH"
 echo "TOKENIZER_TYPE=$TOKENIZER_TYPE"
+echo "MODEL_NAME=$MODEL_NAME"
+echo "TEMPERATURE=$TEMPERATURE"
+echo "TOP_P=$TOP_P"
+echo "TOP_K=$TOP_K"
 
 export OPENAI_API_KEY=${OPENAI_API_KEY}
 export GEMINI_API_KEY=${GEMINI_API_KEY}
