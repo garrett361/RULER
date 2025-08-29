@@ -15,14 +15,10 @@
 TEMPERATURE="0.0" # greedy
 TOP_P="1.0"
 TOP_K="32"
-SEQ_LENGTHS=(
-    131072
-    65536
-    32768
-    16384
-    8192
-    4096
-)
+
+# Turn a comma-separated SEQ_LENGTHS list into a bash array
+SEQ_LENGTHS=${SEQ_LENGTHS:-4096,8192,16384,32768}
+IFS=',' read -ra SEQ_LENGTHS <<< "$SEQ_LENGTHS"
 
 MODEL_SELECT() {
     MODEL_NAME=$1

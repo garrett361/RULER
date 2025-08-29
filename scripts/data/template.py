@@ -34,4 +34,12 @@ Templates = {
     'jamba': "<|startoftext|><|bom|><|system|> <|eom|><|bom|><|user|> {task_template}<|eom|><|bom|><|assistant|>",
     
     'nemotron5-instruct': "<SPECIAL_10>System\n\n<SPECIAL_11>User\n{task_template}\n<SPECIAL_11>Assistant\n",
+
+    'long-context': "<|user|>\n{task_template}\n<|assistant|>\n",
+
+    'granite': "<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|><|start_of_role|>assistant<|end_of_role|>",
+
+    'g4l': "<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>",
+
+
 }
