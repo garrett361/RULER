@@ -32,4 +32,15 @@ Templates = {
     'meta-llama3': "<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n{task_template}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n",
     
     'jamba': "<|startoftext|><|bom|><|system|> <|eom|><|bom|><|user|> {task_template}<|eom|><|bom|><|assistant|>",
+    
+    'nemotron5-instruct': "<SPECIAL_10>System\n\n<SPECIAL_11>User\n{task_template}\n<SPECIAL_11>Assistant\n",
+
+    'long-context': "<|user|>\n{task_template}\n<|assistant|>\n",
+
+    'granite': "<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|><|start_of_role|>assistant<|end_of_role|>",
+
+    'g4l': "<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>",
+
+
 }
+>>>>>>> a59086f (reconfigure for vela, add more templates, etc)
