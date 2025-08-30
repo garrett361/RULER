@@ -23,6 +23,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_path", type=str)
     parser.add_argument("--batch_size", type=str)
     parser.add_argument("--ruler_hash", type=str)
+    parser.add_argument("--vllm_model_impl", type=str)
 
     args = parser.parse_args()
     cfg = {
@@ -31,6 +32,7 @@ if __name__ == "__main__":
         "model_framework": args.model_framework,
         "model_path": args.model_path,
         "root_dir": args.root_dir,
+        "vllm_model_impl": args.vllm_model_impl,
     }
 
     wandb.init(

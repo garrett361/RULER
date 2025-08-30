@@ -26,6 +26,7 @@ fi
 GPUS=$(nvidia-smi --list-gpus | wc -l) # Use all available GPUs
 ENGINE_DIR="." # the path that contains individual engine folders from TensorRT-LLM.
 BATCH_SIZE=${BATCH_SIZE:-8}  # increase to improve GPU utilization
+VLLM_MODEL_IMPL=${VLLM_MODEL_IMPL:-auto}  # increase to improve GPU utilization
 
 # NOTE: @goon - bypass the config_models.sh logic and assume the user has specified the following
 # directly
@@ -103,6 +104,7 @@ if [ "$MODEL_FRAMEWORK" == "vllm" ]; then
         --dtype bfloat16 \
         --disable-custom-all-reduce \
         --trust-remote-code \
+        --model_impl $VLLM_MODEL_IMPL\
         &
 
 elif [ "$MODEL_FRAMEWORK" == "trtllm" ]; then
