@@ -25,7 +25,7 @@ python variable_tracking.py   \
     --num_samples 10 \
     --random_seed 42  \
     --num_chains 1  --num_hops 4 \
-    --template "[INST] Memorize and track the chain(s) of variable assignment hidden in the following text.\n\n{context}\nQuestion: Find all variables that are assigned the value {query} in the text above. [/INST] Answer: According to the chain(s) of variable assignment in the text above, {num_v} variables are assgined the value {query}, they are: "
+    --template "[INST] Memorize and track the chain(s) of variable assignment hidden in the following text.\n\n{context}\nQuestion: Find all variables that are assigned the value {query} in the text above. [/INST] Answer: According to the chain(s) of variable assignment in the text above, {num_v} variables are assigned the value {query}, they are: "
 """
 import os
 import json
