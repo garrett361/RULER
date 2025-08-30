@@ -22,6 +22,7 @@ if __name__ == "__main__":
     parser.add_argument("--model_framework", type=str)
     parser.add_argument("--model_path", type=str)
     parser.add_argument("--batch_size", type=str)
+    parser.add_argument("--ruler_hash", type=str)
 
     args = parser.parse_args()
     cfg = {
@@ -52,6 +53,7 @@ if __name__ == "__main__":
             "seqlen": int(seqlen),
             "mean_score": mean_score,
             "batch_size": args.batch_size,
+            "ruler_hash": args.ruler_hash,
         }
         vals_to_track = {**vals_to_track, **dict(zip(tasks, scores))}
 
