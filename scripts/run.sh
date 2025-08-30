@@ -14,7 +14,7 @@
 # limitations under the License.
 
 # container: docker.io/cphsieh/ruler:0.1.0
-# bash run.sh MODEL_NAME BENCHMARK_NAME
+# bash run.sh RUN_ID BENCHMARK_NAME
 
 if [ $# -ne 2 ]; then
     echo "Usage: $0 <model_name> $1 <benchmark_name>"
@@ -24,7 +24,6 @@ fi
 
 # Root Directories
 GPUS=$(nvidia-smi --list-gpus | wc -l) # Use all available GPUs
-ROOT_DIR="benchmark_root" # the path that stores generated task samples and model predictions.
 ENGINE_DIR="." # the path that contains individual engine folders from TensorRT-LLM.
 BATCH_SIZE=${BATCH_SIZE:-8}  # increase to improve GPU utilization
 
@@ -35,12 +34,13 @@ BATCH_SIZE=${BATCH_SIZE:-8}  # increase to improve GPU utilization
 # - MODEL_FRAMEWORK
 # - TOKENIZER_PATH
 # - TOKENIZER_TYPE
+# - ROOT_DIR
 #
-# MODEL_NAME is only used to determine where the outputs go
+# RUN_ID is only used to determine where the outputs go
 
 
 # NOTE: @goon - move the non-MODEL_SELECT code from config_models.sh here
-MODEL_NAME=${1}
+RUN_ID=${1}
 TEMPERATURE="0.0" # greedy
 TOP_P="1.0"
 TOP_K="32"
@@ -52,10 +52,10 @@ IFS=',' read -ra SEQ_LENGTHS <<< "$SEQ_LENGTHS"
 # # Model and Tokenizer
 # NOTE: @goon - still sourcing config_models.sh because it's where we also
 # source config_models.sh
-# MODEL_CONFIG=$(MODEL_SELECT ${MODEL_NAME} ${MODEL_DIR} ${ENGINE_DIR})
+# MODEL_CONFIG=$(MODEL_SELECT ${RUN_ID} ${MODEL_DIR} ${ENGINE_DIR})
 # IFS=":" read MODEL_PATH MODEL_TEMPLATE_TYPE MODEL_FRAMEWORK TOKENIZER_PATH TOKENIZER_TYPE OPENAI_API_KEY GEMINI_API_KEY AZURE_ID AZURE_SECRET AZURE_ENDPOINT <<< "$MODEL_CONFIG"
 # if [ -z "${MODEL_PATH}" ]; then
-#     echo "Model: ${MODEL_NAME} is not supported"
+#     echo "Model: ${RUN_ID} is not supported"
 #     exit 1
 # fi
 
@@ -88,7 +88,7 @@ echo "MODEL_TEMPLATE_TYPE=$MODEL_TEMPLATE_TYPE"
 echo "MODEL_FRAMEWORK=$MODEL_FRAMEWORK"
 echo "TOKENIZER_PATH=$TOKENIZER_PATH"
 echo "TOKENIZER_TYPE=$TOKENIZER_TYPE"
-echo "MODEL_NAME=$MODEL_NAME"
+echo "RUN_ID=$RUN_ID"
 echo "TEMPERATURE=$TEMPERATURE"
 echo "TOP_P=$TOP_P"
 echo "TOP_K=$TOP_K"
@@ -126,7 +126,7 @@ fi
 total_time=0
 for MAX_SEQ_LENGTH in "${SEQ_LENGTHS[@]}"; do
 
-    RESULTS_DIR="${ROOT_DIR}/${MODEL_NAME}/${BENCHMARK}/${MAX_SEQ_LENGTH}"
+    RESULTS_DIR="${ROOT_DIR}/${RUN_ID}/${BENCHMARK}/${MAX_SEQ_LENGTH}"
     echo "Saving MAX_SEQ_LENGTH=${MAX_SEQ_LENGTH} results to ${RESULTS_DIR}"
     DATA_DIR="${RESULTS_DIR}/data"
     PRED_DIR="${RESULTS_DIR}/pred"
