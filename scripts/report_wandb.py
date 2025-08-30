@@ -41,7 +41,7 @@ if __name__ == "__main__":
         settings=wandb.Settings(init_timeout=3600),
     )
     for seqlen in args.seqlens.split(","):
-        csv_path = Path(args.root_dir) / "synthetic" / seqlen / "pred" / "summary.csv"
+        csv_path = Path(args.root_dir)/ args.run_id / "synthetic" / seqlen / "pred" / "summary.csv"
 
         df = pd.read_csv(csv_path)
         df = df.set_index(df.columns[0])
