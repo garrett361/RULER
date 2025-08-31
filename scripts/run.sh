@@ -72,15 +72,6 @@ export AZURE_API_ENDPOINT=${AZURE_ENDPOINT}
 # NOTE: @goon - instead of sourcing config_tasks.sh, replicate the logic here and
 # make the tasks we run configurable.
 
-# # Benchmark and Tasks
-# source config_tasks.sh
-# BENCHMARK=${2}
-# declare -n TASKS=$BENCHMARK
-# if [ -z "${TASKS}" ]; then
-#     echo "Benchmark: ${BENCHMARK} is not supported"
-#     exit 1
-# fi
-
 BENCHMARK=synthetic
 DEFAULT_TASKS=niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3,niah_multivalue,niah_multiquery,vt,cwe,fwe,qa_1,qa_2
 TASKS=${TASKS:-$DEFAULT_TASKS}
