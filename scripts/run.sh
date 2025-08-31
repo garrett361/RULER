@@ -94,6 +94,7 @@ echo "TEMPERATURE=$TEMPERATURE"
 echo "TOP_P=$TOP_P"
 echo "TOP_K=$TOP_K"
 echo "NUM_SAMPLES=$NUM_SAMPLES"
+echo "VLLM_MODEL_IMPL=$VLLM_MODEL_IMPL"
 
 
 # Start server (you may want to run in other container.)

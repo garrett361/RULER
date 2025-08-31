@@ -17,11 +17,11 @@ if __name__ == "__main__":
     parser.add_argument("--tracker_dir", type=str)
     parser.add_argument("--project_name", type=str)
     parser.add_argument("--run_id", type=str)
-    parser.add_argument("--num_samples", type=int, default=500)
+    parser.add_argument("--batch_size", type=int)
+    parser.add_argument("--num_samples", type=int)
     parser.add_argument("--model_template_type", type=str, default="")
     parser.add_argument("--model_framework", type=str, default="")
     parser.add_argument("--model_path", type=str, default="")
-    parser.add_argument("--batch_size", type=str, default="")
     parser.add_argument("--ruler_hash", type=str, default="")
     parser.add_argument("--vllm_model_impl", type=str, default="")
 
