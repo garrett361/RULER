@@ -14,7 +14,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--root_dir", type=str, help="Base dir (parent of 'synthetic' dir)"
     )
-    parser.add_argument("--tracker_dir", type=str)
+    parser.add_argument("--tracker_dir", type=str, default=None)
     parser.add_argument("--project_name", type=str)
     parser.add_argument("--run_id", type=str)
     parser.add_argument("--batch_size", type=int)
@@ -35,16 +35,18 @@ if __name__ == "__main__":
         "vllm_model_impl": args.vllm_model_impl,
     }
 
+    run_path = Path(args.root_dir) / args.run_id
+    tracker_dir = args.tracker_dir or run_path
     wandb.init(
         project=args.project_name,
-        dir=args.tracker_dir,
+        dir=tracker_dir,
         resume="allow",
         id=args.run_id,
         config=cfg,
         settings=wandb.Settings(init_timeout=3600),
     )
     for seqlen in args.seqlens.split(","):
-        csv_path = Path(args.root_dir)/ args.run_id / "synthetic" / seqlen / "pred" / "summary.csv"
+        csv_path = run_path / "synthetic" / seqlen / "pred" / "summary.csv"
 
         df = pd.read_csv(csv_path)
         df = df.set_index(df.columns[0])
