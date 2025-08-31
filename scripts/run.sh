@@ -42,9 +42,9 @@ VLLM_MODEL_IMPL=${VLLM_MODEL_IMPL:-auto}  # increase to improve GPU utilization
 
 # NOTE: @goon - move the non-MODEL_SELECT code from config_models.sh here
 RUN_ID=${1}
-TEMPERATURE="0.0" # greedy
-TOP_P="1.0"
-TOP_K="32"
+TEMPERATURE=${TEMPERATURE:-"0.0"} # greedy by default
+TOP_P=${TOP_P:-"1.0"}
+TOP_K=${TOP_K:-"32"}
 
 # Turn a comma-separated SEQ_LENGTHS list into a bash array
 SEQ_LENGTHS=${SEQ_LENGTHS:-4096,8192,16384,32768}
