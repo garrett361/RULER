@@ -69,13 +69,36 @@ export AZURE_API_SECRET=${AZURE_SECRET}
 export AZURE_API_ENDPOINT=${AZURE_ENDPOINT}
 
 
-# Benchmark and Tasks
-source config_tasks.sh
-BENCHMARK=${2}
-declare -n TASKS=$BENCHMARK
-if [ -z "${TASKS}" ]; then
-    echo "Benchmark: ${BENCHMARK} is not supported"
-    exit 1
+# NOTE: @goon - instead of sourcing config_tasks.sh, replicate the logic here and
+# make the tasks we run configurable.
+
+# # Benchmark and Tasks
+# source config_tasks.sh
+# BENCHMARK=${2}
+# declare -n TASKS=$BENCHMARK
+# if [ -z "${TASKS}" ]; then
+#     echo "Benchmark: ${BENCHMARK} is not supported"
+#     exit 1
+# fi
+
+BENCHMARK=synthetic
+DEFAULT_TASKS=niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3,niah_multivalue,niah_multiquery,vt,cwe,fwe,qa_1,qa_2
+TASKS=${TASKS:-$DEFAULT_TASKS}
+
+NUM_SAMPLES=${NUM_SAMPLES:-500}
+REMOVE_NEWLINE_TAB=${REMOVE_NEWLINE_TAB:-false}
+STOP_WORDS=${STOP_WORDS:-""}
+
+if [ -z "${STOP_WORDS}" ]; then
+    STOP_WORDS=""
+else
+    STOP_WORDS="--stop_words \"${STOP_WORDS}\""
+fi
+
+if [ "${REMOVE_NEWLINE_TAB}" = false ]; then
+    REMOVE_NEWLINE_TAB=""
+else
+    REMOVE_NEWLINE_TAB="--remove_newline_tab"
 fi
 
 
@@ -95,6 +118,10 @@ echo "TOP_P=$TOP_P"
 echo "TOP_K=$TOP_K"
 echo "NUM_SAMPLES=$NUM_SAMPLES"
 echo "VLLM_MODEL_IMPL=$VLLM_MODEL_IMPL"
+echo "TASKS=$TASKS"
+
+# Turns TASKS into a list:
+IFS=',' read -ra TASKS <<< "$TASKS"
 
 
 # Start server (you may want to run in other container.)
