@@ -47,7 +47,7 @@ TOP_P=${TOP_P:-"1.0"}
 TOP_K=${TOP_K:-"32"}
 
 # Turn a comma-separated SEQ_LENGTHS list into a bash array
-SEQ_LENGTHS=${SEQ_LENGTHS:-4096,8192,16384,32768}
+SEQ_LENGTHS=${SEQ_LENGTHS:-4096,8192,16384,32768,65536,131072}
 IFS=',' read -ra SEQ_LENGTHS <<< "$SEQ_LENGTHS"
 
 # # Model and Tokenizer
