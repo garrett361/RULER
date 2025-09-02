@@ -123,7 +123,7 @@ def write_evaluation(results: dict):
         ['Nulls'] + nulls,
     ]
 
-    output_file = os.path.join(args.data_dir, 'summary.csv' if len(tasks) > 1 else f'summary-{tasks[0]}.csv')
+    output_file = os.path.join(args.data_dir, 'summary.csv')
     df = pd.DataFrame(dfs)
     df.to_csv(output_file, index=False)
     print('\n=============================================\n')
