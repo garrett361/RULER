@@ -24,15 +24,15 @@ Templates = {
     'command-r-chat': "<BOS_TOKEN><|START_OF_TURN_TOKEN|><|USER_TOKEN|>{task_template}<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|>",
 
     'chatglm-chat': "[gMASK]sop<|user|> \n {task_template}<|assistant|> \n ",
-    
+
     'RWKV': "User: hi\n\nAssistant: Hi. I am your assistant and I will provide expert full response in full details. Please feel free to ask any question and I will always answer it\n\nUser: {task_template}\n\nAssistant:",
 
     'Phi3': "<|user|>\n{task_template}<|end|>\n<|assistant|>\n",
 
     'meta-llama3': "<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n{task_template}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n",
-    
+
     'jamba': "<|startoftext|><|bom|><|system|> <|eom|><|bom|><|user|> {task_template}<|eom|><|bom|><|assistant|>",
-    
+
     'nemotron5-instruct': "<SPECIAL_10>System\n\n<SPECIAL_11>User\n{task_template}\n<SPECIAL_11>Assistant\n",
 
     'long-context': "<|user|>\n{task_template}\n<|assistant|>\n",
@@ -41,5 +41,7 @@ Templates = {
 
     'g4l': "<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>",
 
+    "granite-3": "<|start_of_role|>system<|end_of_role|>Knowledge Cutoff Date: April 2024.\nToday's Date: September 01, 2025.\nYou are Granite, developed by IBM. You are a helpful AI assistant.<|end_of_text|>\n<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>",
 
+    "granite-3-think": "<|start_of_role|>system<|end_of_role|>Knowledge Cutoff Date: April 2024.\nToday's Date: September 01, 2025.\nYou are Granite, developed by IBM. You are a helpful AI assistant.\nRespond to every user query in a comprehensive and detailed way. You can write down your thoughts and reasoning process before responding. In the thought process, engage in a comprehensive cycle of analysis, summarization, exploration, reassessment, reflection, backtracing, and iteration to develop well-considered thinking process. In the response section, based on various attempts, explorations, and reflections from the thoughts section, systematically present the final solution that you deem correct. The response should summarize the thought process. Write your thoughts between <think></think> and write your response between <response></response> for each user query.<|end_of_text|>\n<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>"
 }
