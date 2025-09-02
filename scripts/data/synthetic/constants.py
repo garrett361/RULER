@@ -31,7 +31,7 @@ TASKS = {
     'variable_tracking': {
         # TODO: @goon - DELETE
         # 'tokens_to_generate': 30,
-        'tokens_to_generate': 1024,
+        'tokens_to_generate': 128,
         'template': """Memorize and track the chain(s) of variable assignment hidden in the following text.\n\n{context}\nQuestion: Find all variables that are assigned the value {query} in the text above.""",
         'answer_prefix': """ Answer: According to the chain(s) of variable assignment in the text above, {num_v} variables are assigned the value {query}, they are: """
     },
