@@ -243,12 +243,17 @@ def main():
     def get_output(idx_list, index_list, input_list, outputs_list, others_list, truncation_list, length_list):
         nonlocal llm
 
+        llm_start_s = time.time()
+        timeout_s = os.getenv("RULER_TIMEOUT_SEC", 60*10)
         while True:
             try:
                 pred_list = llm.process_batch(prompts=input_list)
                 break
             except Exception as e:
                 traceback.print_exc()
+                curr_start_s = time.time() - llm_start_s
+                if curr_start_s > timeout_s:
+                    raise TimeoutError(f"Waited {timeout_s=} seconds for LLM to load, exiting!") from e
                 time.sleep(os.getenv("RULER_SLEEP_SEC", 60))
 
         zipped_iter = zip(pred_list, idx_list, index_list, input_list,
