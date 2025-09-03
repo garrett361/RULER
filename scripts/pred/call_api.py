@@ -249,7 +249,7 @@ def main():
                 break
             except Exception as e:
                 traceback.print_exc()
-                time.sleep(os.getenv("RULER_SLEEP_SEC", 30))
+                time.sleep(os.getenv("RULER_SLEEP_SEC", 60))
 
         zipped_iter = zip(pred_list, idx_list, index_list, input_list,
                           outputs_list, others_list, truncation_list, length_list)
