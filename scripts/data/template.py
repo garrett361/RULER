@@ -40,6 +40,7 @@ Templates = {
     'granite': "<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|><|start_of_role|>assistant<|end_of_role|>",
 
     'g4l': "<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>",
+    "g4-micro": "<|start_of_role|>system<|end_of_role|>You are a helpful assistant. Please ensure responses are professional, accurate, and safe.<|end_of_text|>\n<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>",
 
     "granite-3": "<|start_of_role|>system<|end_of_role|>Knowledge Cutoff Date: April 2024.\nToday's Date: September 01, 2025.\nYou are Granite, developed by IBM. You are a helpful AI assistant.<|end_of_text|>\n<|start_of_role|>user<|end_of_role|>{task_template}<|end_of_text|>\n<|start_of_role|>assistant<|end_of_role|>",
 
