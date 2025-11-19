@@ -53,4 +53,5 @@ Templates = {
     "qwen2.5_instruct": "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n{task_template}<|im_end|>\n<|im_start|>assistant\n",
     "qwen2.5_instruct_1M": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\n{task_template}<|im_end|>\n<|im_start|>assistant\n",
     "qwen3": "<|im_start|>user\n{task_template}<|im_end|>\n<|im_start|>assistant\n",
+    "respond_without_thinking": "\n<|start_of_role|>user<|end_of_role|>{task_template}\n</respond_without_thinking><|eot_id|>\n<|start_of_role|>assistant<|end_of_role|>",
 }
